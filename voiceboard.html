@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>会話ボード</title>
+
+<style>
+
+body{
+ background:#f2f2f2;
+ text-align:center;
+ font-family:sans-serif;
+ margin:0;
+ padding:20px;
+}
+
+h1{
+ font-size:50px;
+ margin-bottom:25px;
+}
+
+button{
+
+ width:95%;
+
+ height:140px;
+
+ font-size:42px;
+
+ border-radius:25px;
+
+ margin:10px;
+
+}
+
+.grid{
+
+ display:grid;
+
+ grid-template-columns:1fr 1fr;
+
+ gap:20px;
+
+}
+
+.page{
+
+ display:none;
+
+}
+
+.show{
+
+ display:block;
+
+}
+
+.backbutton{
+
+ width:90%;
+
+ max-width:500px;
+
+ margin-top:40px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="menu" class="show">
+
+<h1>会話メニュー</h1>
+
+<button onclick="showPage('greeting')">
+😊 挨拶・気持ち
+</button>
+
+<button onclick="showPage('family')">
+👪 家族・場所
+</button>
+
+<button onclick="showPage('home')">
+🏠 まどか
+</button>
+
+<button onclick="showPage('talk')">
+💬 アレクサ
+</button>
+
+<button onclick="showPage('other')">
+❓ その他
+</button>
+
+<button onclick="showPage('kana')">
+💡 50音
+</button>
+
+</div>
+
+<div id="greeting" class="page">
+
+<h1>挨拶</h1>
+
+<div class="grid">
+
+<button onclick="speak('おはよう')">☀ おはよう</button>
+
+<button onclick="speak('おやすみなさい')">🌙 おやすみ</button>
+
+<button onclick="speak('元気です')">😊 元気</button>
+
+<button onclick="speak('調子悪い')">😟 調子悪い</button>
+
+<button onclick="speak('ありがとう')">🙏 ありがとう</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('menu')">
+⬅ 戻る </button>
+
+</div>
+
+<div id="family" class="page">
+
+<h1>家族・場所</h1>
+
+<div class="grid">
+
+<button onclick="speak('おとうさん')">👨‍🦳 お父さん</button>
+
+<button onclick="speak('おかあさん')">👩‍🦱 お母さん</button>
+
+<button onclick="speak('ゆういちくん')">🧑 雄一くん</button>
+
+<button onclick="speak('みきおくん')">👦 幹生くん</button>
+
+<button onclick="speak('ひさえちゃん')">👩 ひさ枝ちゃん</button>
+
+<button onclick="speak('じゅらく')">🍜 受楽</button>
+
+<button onclick="speak('ふるーる')">💐 フルール</button>
+
+<button onclick="speak('メゾンジュラク')">🦽 メゾンジュラク</button>
+
+<button onclick="speak('ともこさん')">🐕 智子さん</button>
+
+<button onclick="speak('だいすけくん')">👨‍🍳 大輔くん</button>
+
+<button onclick="speak('しょうたくん')">🏀 翔太くん</button>
+
+<button onclick="speak('しおみちゃん')">🍬 汐未ちゃん</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('menu')">
+⬅ 戻る </button>
+
+</div>
+
+<div id="home" class="page">
+
+<h1>まどか</h1>
+
+<div class="grid">
+
+<button onclick="speak('痰の吸引をしてほしい')">
+痰吸引
+</button>
+
+<button onclick="speak('苦しい')">
+苦しい
+</button>
+
+<button onclick="speak('痛い')">
+痛い
+</button>
+
+<button onclick="speak('暑い')">
+暑い
+</button>
+
+<button onclick="speak('寒い')">
+寒い
+</button>
+
+<button onclick="speak('ベッドで寝たい')">
+ベッド
+</button>
+
+<button onclick="speak('車椅子に座りたい')">
+車椅子
+</button>
+
+<button onclick="speak('着替えたい')">
+着替えたい
+</button>
+
+<button onclick="speak('行きたい')">
+行きたい
+</button>
+
+<button onclick="speak('行きたくない')">
+行きたくない
+</button>
+
+<button onclick="speak('日向ぼっこしたい')">
+日向ぼっこ
+</button>
+
+<button onclick="speak('レクリエーションに参加したい')">
+レクリエーション
+</button>
+
+<button onclick="speak('ボッチャ')">
+ボッチャ
+</button>
+
+<button onclick="speak('ありがとう')">
+ありがとう
+</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('menu')">
+⬅ 戻る </button>
+
+</div>
+
+<script>
+
+function showPage(id){
+
+ document
+ .querySelectorAll('#menu,.page')
+ .forEach(x=>{
+
+   x.classList.remove('show');
+
+   if(x.id!=="menu"){
+
+     x.classList.add('page');
+
+   }
+
+ });
+
+ document
+ .getElementById(id)
+ .classList.add('show');
+
+}
+
+function speak(text){
+
+ speechSynthesis.cancel();
+
+ const msg =
+ new SpeechSynthesisUtterance();
+
+ msg.text=text;
+
+ msg.lang="ja-JP";
+
+ msg.rate=0.8;
+
+ const voices =
+ speechSynthesis.getVoices();
+
+ const jp =
+ voices.find(v =>
+ v.lang.includes("ja"));
+
+ if(jp){
+
+   msg.voice=jp;
+
+ }
+
+ speechSynthesis.speak(msg);
+
+}
+
+</script>
+
+<!-- アレクサ -->
+
+<div id="talk" class="page">
+
+<h1>アレクサ</h1>
+
+<div class="grid">
+
+<button onclick="speak('アレクサ')">
+アレクサ
+</button>
+
+<button onclick="speak('呼び出し')">
+呼び出し
+</button>
+
+<button onclick="speak('3階')">
+3階
+</button>
+
+<button onclick="speak('終わり')">
+終わり
+</button>
+
+<button onclick="speak('演歌をかけて')">
+演歌
+</button>
+
+<button onclick="speak('昭和歌謡をかけて')">
+昭和歌謡
+</button>
+
+<button onclick="speak('眠れる音楽をかけて')">
+眠れる音楽
+</button>
+
+<button onclick="speak('ホーム')">
+ホーム
+</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('menu')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- その他 -->
+
+<div id="other" class="page">
+
+<h1>その他</h1>
+
+<div class="grid">
+
+<button onclick="speak('銀行')">銀行</button>
+
+<button onclick="speak('入金')">入金</button>
+
+<button onclick="speak('記帳して')">
+通帳記帳
+</button>
+
+<button onclick="speak('通帳を持ってきて')">
+通帳持ってきて
+</button>
+
+<button onclick="speak('東京シティ信用金庫')">
+東京シティ信用金庫
+</button>
+
+<button onclick="speak('三井住友信託銀行')">
+三井住友信託銀行
+</button>
+
+<button onclick="speak('大東京信用組合')">
+大東京信用組合
+</button>
+
+<button onclick="speak('みずほ銀行')">
+みずほ銀行
+</button>
+
+<button onclick="speak('みずほ証券')">
+みずほ証券
+</button>
+
+<button onclick="speak('株')">
+株
+</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('menu')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- 50音メニュー -->
+
+<div id="kana" class="page">
+
+<h1>50音</h1>
+
+<div class="grid">
+
+<button onclick="showPage('a_row')">
+あ行
+</button>
+
+<button onclick="showPage('ka_row')">
+か行
+</button>
+
+<button onclick="showPage('sa_row')">
+さ行
+</button>
+
+<button onclick="showPage('ta_row')">
+た行
+</button>
+
+<button onclick="showPage('na_row')">
+な行
+</button>
+
+<button onclick="showPage('ha_row')">
+は行
+</button>
+
+<button onclick="showPage('ma_row')">
+ま行
+</button>
+
+<button onclick="showPage('ya_row')">
+や行
+</button>
+
+<button onclick="showPage('ra_row')">
+ら行
+</button>
+
+<button onclick="showPage('wa_row')">
+わ行
+</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('menu')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- あ行 -->
+
+<div id="a_row" class="page">
+
+<h1>あ行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('あー')">あ</button>
+
+<button onclick="speak('いー')">い</button>
+
+<button onclick="speak('うー')">う</button>
+
+<button onclick="speak('えー')">え</button>
+
+<button onclick="speak('おー')">お</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- か行 -->
+
+<div id="ka_row" class="page">
+
+<h1>か行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('かー')">か</button>
+
+<button onclick="speak('きー')">き</button>
+
+<button onclick="speak('くー')">く</button>
+
+<button onclick="speak('けー')">け</button>
+
+<button onclick="speak('こー')">こ</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- さ行 -->
+
+<div id="sa_row" class="page">
+
+<h1>さ行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('さー')">さ</button> <button onclick="speak('しー')">し</button> <button onclick="speak('すー')">す</button> <button onclick="speak('せー')">せ</button> <button onclick="speak('そー')">そ</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- た行 -->
+
+<div id="ta_row" class="page">
+
+<h1>た行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('たー')">た</button> <button onclick="speak('ちー')">ち</button> <button onclick="speak('つー')">つ</button> <button onclick="speak('てー')">て</button> <button onclick="speak('とー')">と</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- な行 -->
+
+<div id="na_row" class="page">
+
+<h1>な行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('なー')">な</button> <button onclick="speak('にー')">に</button> <button onclick="speak('ぬー')">ぬ</button> <button onclick="speak('ねー')">ね</button> <button onclick="speak('のー')">の</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- は行 -->
+
+<div id="ha_row" class="page">
+
+<h1>は行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('はー')">は</button> <button onclick="speak('ひー')">ひ</button> <button onclick="speak('ふー')">ふ</button> <button onclick="speak('へー')">へ</button> <button onclick="speak('ほー')">ほ</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- ま行 -->
+
+<div id="ma_row" class="page">
+
+<h1>ま行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('まー')">ま</button> <button onclick="speak('みー')">み</button> <button onclick="speak('むー')">む</button> <button onclick="speak('めー')">め</button> <button onclick="speak('もー')">も</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- や行 -->
+
+<div id="ya_row" class="page">
+
+<h1>や行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('やー')">や</button> <button onclick="speak('ゆー')">ゆ</button> <button onclick="speak('よー')">よ</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- ら行 -->
+
+<div id="ra_row" class="page">
+
+<h1>ら行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('らー')">ら</button> <button onclick="speak('りー')">り</button> <button onclick="speak('るー')">る</button> <button onclick="speak('れー')">れ</button> <button onclick="speak('ろー')">ろ</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+<!-- わ行 -->
+
+<div id="wa_row" class="page">
+
+<h1>わ行</h1>
+
+<div style="display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;">
+
+<button onclick="speak('わー')">わ</button> <button onclick="speak('をー')">を</button> <button onclick="speak('んー')">ん</button>
+
+</div>
+
+<button class="backbutton"
+onclick="showPage('kana')">
+⬅ 戻る </button>
+
+</div>
+
+
+</body>
+</html>
