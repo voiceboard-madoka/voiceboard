@@ -264,36 +264,45 @@ function showPage(id){
 
 }
 
+window.speechSynthesis.onvoiceschanged = () => {
+  speechSynthesis.getVoices();
+};
+
 function speak(text){
 
  speechSynthesis.cancel();
 
- const msg =
- new SpeechSynthesisUtterance();
-
- msg.text=text;
-
- msg.lang="ja-JP";
-
- msg.rate=0.8;
-
  const voices =
  speechSynthesis.getVoices();
 
- const jp =
+ const msg =
+ new SpeechSynthesisUtterance(text);
+
+ msg.lang = "ja-JP";
+
+ msg.rate = 0.8;
+
+ msg.pitch = 1;
+
+ msg.volume = 1;
+
+ const jpVoice =
  voices.find(v =>
- v.lang.includes("ja"));
+   v.lang &&
+   v.lang.indexOf("ja") >= 0
+ );
 
- if(jp){
-
-   msg.voice=jp;
-
+ if(jpVoice){
+   msg.voice = jpVoice;
  }
 
- speechSynthesis.speak(msg);
+ setTimeout(()=>{
+
+   speechSynthesis.speak(msg);
+
+ },150);
 
 }
-
 </script>
 
 <!-- アレクサ -->
