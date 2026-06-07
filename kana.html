@@ -110,10 +110,9 @@ button{
 <button onclick="addChar('ゃ')">ゃ</button>
 <button onclick="addChar('ゅ')">ゅ</button>
 <button onclick="addChar('ょ')">ょ</button>
+<button onclick="addDakuten()">゛</button>
+<button onclick="addHandakuten()">゜</button>
 
-<button onclick="addChar('、')">、</button>
-<button onclick="addChar('。')">。</button>
- 
 </div>
 
 <div class="control">
@@ -188,6 +187,62 @@ function speakText(){
 
 }
 
+function addDakuten(){
+
+ const map = {
+
+ 'か':'が','き':'ぎ','く':'ぐ','け':'げ','こ':'ご',
+ 'さ':'ざ','し':'じ','す':'ず','せ':'ぜ','そ':'ぞ',
+ 'た':'だ','ち':'ぢ','つ':'づ','て':'で','と':'ど',
+ 'は':'ば','ひ':'び','ふ':'ぶ','へ':'べ','ほ':'ぼ'
+
+ };
+
+ const last = text.slice(-1);
+
+ if(map[last]){
+
+   text =
+   text.slice(0,-1)
+   + map[last];
+
+   document
+   .getElementById("textArea")
+   .innerText=text;
+
+ }
+
+}
+
+
+function addHandakuten(){
+
+ const map = {
+
+ 'は':'ぱ',
+ 'ひ':'ぴ',
+ 'ふ':'ぷ',
+ 'へ':'ぺ',
+ 'ほ':'ぽ'
+
+ };
+
+ const last = text.slice(-1);
+
+ if(map[last]){
+
+   text =
+   text.slice(0,-1)
+   + map[last];
+
+   document
+   .getElementById("textArea")
+   .innerText=text;
+
+ }
+
+}
+ 
 </script>
 
 </body>
