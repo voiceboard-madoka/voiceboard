@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>50音ボード</title>
+
+<style>
+
+body{
+ background:#f2f2f2;
+ font-family:sans-serif;
+ text-align:center;
+ margin:0;
+ padding:15px;
+}
+
+h1{
+ font-size:42px;
+ margin:10px;
+}
+
+#textArea{
+ background:white;
+ border-radius:15px;
+ min-height:90px;
+ padding:15px;
+ font-size:42px;
+ margin-bottom:20px;
+ word-break:break-all;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:10px;
+}
+
+button{
+
+ font-size:34px;
+
+ height:90px;
+
+ border-radius:15px;
+
+ touch-action:manipulation;
+
+}
+
+.control{
+ margin-top:20px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+}
+
+.big{
+ font-size:32px;
+ height:100px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>50音ボード</h1>
+
+<div id="textArea"></div>
+
+<div class="grid">
+
+<button onclick="addChar('あ')">あ</button> <button onclick="addChar('い')">い</button> <button onclick="addChar('う')">う</button> <button onclick="addChar('え')">え</button> <button onclick="addChar('お')">お</button>
+
+<button onclick="addChar('か')">か</button> <button onclick="addChar('き')">き</button> <button onclick="addChar('く')">く</button> <button onclick="addChar('け')">け</button> <button onclick="addChar('こ')">こ</button>
+
+<button onclick="addChar('さ')">さ</button> <button onclick="addChar('し')">し</button> <button onclick="addChar('す')">す</button> <button onclick="addChar('せ')">せ</button> <button onclick="addChar('そ')">そ</button>
+
+<button onclick="addChar('た')">た</button> <button onclick="addChar('ち')">ち</button> <button onclick="addChar('つ')">つ</button> <button onclick="addChar('て')">て</button> <button onclick="addChar('と')">と</button>
+
+<button onclick="addChar('な')">な</button> <button onclick="addChar('に')">に</button> <button onclick="addChar('ぬ')">ぬ</button> <button onclick="addChar('ね')">ね</button> <button onclick="addChar('の')">の</button>
+
+<button onclick="addChar('は')">は</button> <button onclick="addChar('ひ')">ひ</button> <button onclick="addChar('ふ')">ふ</button> <button onclick="addChar('へ')">へ</button> <button onclick="addChar('ほ')">ほ</button>
+
+<button onclick="addChar('ま')">ま</button> <button onclick="addChar('み')">み</button> <button onclick="addChar('む')">む</button> <button onclick="addChar('め')">め</button> <button onclick="addChar('も')">も</button>
+
+<button onclick="addChar('や')">や</button> <button></button> <button onclick="addChar('ゆ')">ゆ</button> <button></button> <button onclick="addChar('よ')">よ</button>
+
+<button onclick="addChar('ら')">ら</button> <button onclick="addChar('り')">り</button> <button onclick="addChar('る')">る</button> <button onclick="addChar('れ')">れ</button> <button onclick="addChar('ろ')">ろ</button>
+
+<button onclick="addChar('わ')">わ</button> <button onclick="addChar('を')">を</button> <button onclick="addChar('ん')">ん</button>
+
+</div>
+
+<div class="control">
+
+<button class="big"
+onclick="speakText()">
+🔊 話す </button>
+
+<button class="big"
+onclick="removeLast()">
+⬅ 1文字消す </button>
+
+<button class="big"
+onclick="clearText()">
+🗑 全消去 </button>
+
+<button class="big"
+onclick="addChar('はい')">
+はい </button>
+
+<button class="big"
+onclick="addChar('いいえ')">
+いいえ </button>
+
+</div>
+
+<script>
+
+let text="";
+
+function addChar(c){
+
+ text += c;
+
+ document
+ .getElementById("textArea")
+ .innerText=text;
+
+}
+
+function removeLast(){
+
+ text=text.slice(0,-1);
+
+ document
+ .getElementById("textArea")
+ .innerText=text;
+
+}
+
+function clearText(){
+
+ text="";
+
+ document
+ .getElementById("textArea")
+ .innerText="";
+
+}
+
+function speakText(){
+
+ if(!text) return;
+
+ const msg=
+ new SpeechSynthesisUtterance(text);
+
+ msg.lang="ja-JP";
+
+ speechSynthesis.speak(msg);
+
+}
+
+</script>
+
+</body>
+</html>
