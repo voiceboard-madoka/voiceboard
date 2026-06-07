@@ -22,17 +22,20 @@ h1{
 
 button{
 
- width:95%;
+width:95%;
 
- height:140px;
+height:140px;
 
- font-size:42px;
+font-size:42px;
 
- border-radius:25px;
+border-radius:25px;
 
- margin:10px;
+margin:10px;
+
+touch-action: manipulation;
 
 }
+
 
 .grid{
 
@@ -242,6 +245,53 @@ onclick="showPage('menu')">
 
 <script>
 
+let jpVoice = null;
+let voiceReady = false;
+
+function loadVoice(){
+
+ const voices =
+ speechSynthesis.getVoices();
+
+ jpVoice =
+ voices.find(v =>
+
+   v.lang &&
+   v.lang.startsWith("ja")
+
+ );
+
+}
+
+loadVoice();
+
+speechSynthesis.onvoiceschanged =
+loadVoice;
+
+
+function warmupVoice(){
+
+ if(voiceReady) return;
+
+ voiceReady = true;
+
+ const warm =
+ new SpeechSynthesisUtterance(" ");
+
+ warm.volume = 0;
+
+ speechSynthesis.speak(warm);
+
+}
+
+
+document.addEventListener(
+ "click",
+ warmupVoice,
+ { once:true }
+);
+
+
 function showPage(id){
 
  document
@@ -249,12 +299,6 @@ function showPage(id){
  .forEach(x=>{
 
    x.classList.remove('show');
-
-   if(x.id!=="menu"){
-
-     x.classList.add('page');
-
-   }
 
  });
 
@@ -264,45 +308,36 @@ function showPage(id){
 
 }
 
-window.speechSynthesis.onvoiceschanged = () => {
-  speechSynthesis.getVoices();
-};
 
 function speak(text){
 
- speechSynthesis.cancel();
+ if(speechSynthesis.speaking){
 
- const voices =
- speechSynthesis.getVoices();
+   speechSynthesis.cancel();
+
+ }
 
  const msg =
  new SpeechSynthesisUtterance(text);
 
  msg.lang = "ja-JP";
 
- msg.rate = 0.8;
+ msg.rate = 0.9;
 
  msg.pitch = 1;
 
  msg.volume = 1;
 
- const jpVoice =
- voices.find(v =>
-   v.lang &&
-   v.lang.indexOf("ja") >= 0
- );
-
  if(jpVoice){
+
    msg.voice = jpVoice;
+
  }
 
- setTimeout(()=>{
-
-   speechSynthesis.speak(msg);
-
- },150);
+ speechSynthesis.speak(msg);
 
 }
+
 </script>
 
 <!-- アレクサ -->
